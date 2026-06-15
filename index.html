@@ -15,3 +15,118 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZUSDD - Mini App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .token-icon {
+            font-size: 80px;
+            background: rgba(255,255,255,0.1);
+            width: 150px;
+            height: 150px;
+            border-radius: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 3px solid #ffd700;
+            box-shadow: 0 0 30px rgba(255,215,0,0.3);
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        h1 span {
+            color: #ffd700;
+        }
+
+        .price {
+            font-size: 36px;
+            font-weight: bold;
+            color: #ffd700;
+            margin: 20px 0;
+        }
+
+        .price small {
+            font-size: 16px;
+            color: #ccc;
+        }
+
+        button {
+            background: linear-gradient(135deg, #ffd700, #ffb347);
+            border: none;
+            padding: 14px 35px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 30px;
+            margin-top: 30px;
+            cursor: pointer;
+            color: #1a1a2e;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .info {
+            margin-top: 30px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="token-icon">
+            💎
+        </div>
+        <h1>ZUSDD <span>$</span></h1>
+        <div class="price">
+            $0.024 <small>USD</small>
+        </div>
+        <p>د تلګرام کریپټو ټوکن</p>
+        <button onclick="window.Telegram.WebApp.close()">تړل</button>
+        <div class="info">
+            ⚡ په زیاتیدو کې | د ZUSDD ټولنه
+        </div>
+    </div>
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+        tg.MainButton.setText("راځئ سودا وکړو");
+        tg.MainButton.show();
+        tg.MainButton.onClick(() => {
+            tg.close();
+        });
+    </script>
+</body>
+</html>
