@@ -1,2 +1,379 @@
-# zusdd-mini-app
-Add a README
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZUSDD - بشپړ Mini App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .token-icon {
+            font-size: 60px;
+            background: rgba(255,255,255,0.1);
+            width: 100px;
+            height: 100px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            border: 2px solid #ffd700;
+        }
+
+        h1 {
+            font-size: 32px;
+        }
+
+        h1 span {
+            color: #ffd700;
+        }
+
+        .user-info {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            background: #ffd700;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #1a1a2e;
+        }
+
+        .user-balance {
+            flex: 1;
+        }
+
+        .balance-amount {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .price-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .price {
+            font-size: 42px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .change {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 12px;
+            text-align: center;
+            flex: 1;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        .button-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #ffd700, #ffb347);
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: bold;
+            color: #1a1a2e;
+            cursor: pointer;
+            flex: 1;
+            min-width: 100px;
+            transition: transform 0.2s;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(0.98);
+        }
+
+        .referral-section {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .referral-link {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            word-break: break-all;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copy-btn {
+            background: #ffd700;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #00ff88;
+            color: #1a1a2e;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: none;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="token-icon">💎</div>
+            <h1>ZUSDD <span>$</span></h1>
+        </div>
+
+        <div class="user-info">
+            <div class="user-avatar" id="userAvatar">👤</div>
+            <div class="user-balance">
+                <div>ستاسو توازن</div>
+                <div class="balance-amount" id="userBalance">0 ZUSDD</div>
+            </div>
+        </div>
+
+        <div class="price-card">
+            <div class="price" id="currentPrice">$0.024</div>
+            <div class="change" id="priceChange">📈 +2.4% (24h)</div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="marketCap">$2.4M</div>
+                <div class="stat-label">مارکیټ کیپ</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="volume">$156K</div>
+                <div class="stat-label">حجم (24h)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="holders">12.5K</div>
+                <div class="stat-label">هلډرز</div>
+            </div>
+        </div>
+
+        <div class="button-grid">
+            <button class="btn" onclick="buyToken()">🛒 اخیستل</button>
+            <button class="btn" onclick="sellToken()">💰 پلورل</button>
+            <button class="btn btn-secondary" onclick="transferToken()">📤 لیږدول</button>
+        </div>
+
+        <div class="referral-section">
+            <div>🏆 د حوالې سیستم</div>
+            <div class="referral-link">
+                <span id="refCode">د حوالې کوډ...</span>
+                <button class="copy-btn" onclick="copyReferral()">کاپي</button>
+            </div>
+            <div>د حوالې کمیسیون: <strong>5%</strong></div>
+            <div>ستاسو حوالې: <strong id="refCount">0</strong></div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value">🌐</div>
+                <div class="stat-label">بلاکچین</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">⚡</div>
+                <div class="stat-label">چټک لیږد</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">🔒</div>
+                <div class="stat-label">خوندي</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">پیغام</div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+        tg.MainButton.setText("ZUSDD ټوکن");
+        tg.MainButton.show();
+
+        let user = tg.initDataUnsafe?.user || { first_name: "کارن", id: Math.floor(Math.random() * 1000000) };
+        document.getElementById("userAvatar").innerText = user.first_name?.charAt(0) || "👤";
+        
+        let balance = 0;
+        let referralCount = 0;
+        let referralCode = "ZUSDD" + user.id;
+        let price = 0.024;
+        let priceHistory = [0.0235, 0.024, 0.0245, 0.0238, 0.0242, 0.024];
+
+        function updatePrice() {
+            let change = ((price - priceHistory[priceHistory.length-2]) / priceHistory[priceHistory.length-2] * 100).toFixed(1);
+            document.getElementById("currentPrice").innerHTML = `$${price.toFixed(4)}`;
+            let changeElement = document.getElementById("priceChange");
+            if (change > 0) {
+                changeElement.innerHTML = `📈 +${change}% (24h)`;
+                changeElement.style.color = "#00ff88";
+            } else {
+                changeElement.innerHTML = `📉 ${change}% (24h)`;
+                changeElement.style.color = "#ff4444";
+            }
+        }
+
+        function updateBalance() {
+            document.getElementById("userBalance").innerHTML = balance + " ZUSDD";
+        }
+
+        function buyToken() {
+            let amount = prompt("څومره ZUSDD اخیستل غواړئ؟", "100");
+            if (amount && !isNaN(amount) && amount > 0) {
+                balance += parseFloat(amount);
+                updateBalance();
+                showToast(`✅ ${amount} ZUSDD واخلئ شو!`);
+                tg.HapticFeedback.impactOccurred("light");
+            }
+        }
+
+        function sellToken() {
+            let amount = prompt("څومره ZUSDD پلورل غواړئ؟", "10");
+            if (amount && !isNaN(amount) && amount > 0) {
+                if (amount <= balance) {
+                    balance -= parseFloat(amount);
+                    updateBalance();
+                    showToast(`💰 ${amount} ZUSDD وپلورل شو!`);
+                    tg.HapticFeedback.impactOccurred("light");
+                } else {
+                    showToast("❌ کافي توازن نشته!");
+                }
+            }
+        }
+
+        function transferToken() {
+            let address = prompt("د ترلاسه کونکي آدرس ولیکئ:");
+            let amount = prompt("څومره لیږدول غواړئ؟");
+            if (address && amount && !isNaN(amount) && amount > 0) {
+                if (amount <= balance) {
+                    balance -= parseFloat(amount);
+                    updateBalance();
+                    showToast(`📤 ${amount} ZUSDD لیږل شو!`);
+                    tg.HapticFeedback.impactOccurred("light");
+                } else {
+                    showToast("❌ کافي توازن نشته!");
+                }
+            }
+        }
+
+        document.getElementById("refCode").innerText = referralCode;
+        
+        function copyReferral() {
+            navigator.clipboard.writeText(referralCode);
+            showToast("📋 د حوالې کوډ کاپي شو!");
+            referralCount++;
+            document.getElementById("refCount").innerHTML = referralCount;
+        }
+
+        function showToast(message) {
+            let toast = document.getElementById("toast");
+            toast.innerText = message;
+            toast.style.display = "block";
+            setTimeout(() => {
+                toast.style.display = "none";
+            }, 2000);
+        }
+
+        setInterval(() => {
+            let change = (Math.random() - 0.5) * 0.002;
+            price = Math.max(0.01, price + change);
+            priceHistory.push(price);
+            if (priceHistory.length > 7) priceHistory.shift();
+            updatePrice();
+        }, 10000);
+
+        updatePrice();
+        updateBalance();
+    </script>
+</body>
+</html>
