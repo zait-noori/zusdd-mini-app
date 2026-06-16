@@ -1,379 +1,189 @@
+# ZUSDD Mini App 💎
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZUSDD - بشپړ Mini App</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+A Telegram Mini App for the ZUSDD cryptocurrency token - built for the Afghan community.
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            min-height: 100vh;
-            color: white;
-            padding: 20px;
-        }
+## 🌟 Features
 
-        .container {
-            max-width: 400px;
-            margin: 0 auto;
-        }
+### User Management
+- **User Profile** - Display user information and avatar from Telegram
+- **Balance Tracking** - Real-time balance display in ZUSDD tokens
 
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+### Trading
+- **Buy Tokens** - Purchase ZUSDD tokens with custom amounts
+- **Sell Tokens** - Sell your ZUSDD tokens with balance validation
+- **Transfer Tokens** - Send tokens to other wallet addresses
 
-        .token-icon {
-            font-size: 60px;
-            background: rgba(255,255,255,0.1);
-            width: 100px;
-            height: 100px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
-            border: 2px solid #ffd700;
-        }
+### Market Data
+- **Live Price** - Current token price with real-time updates
+- **24h Change** - Price percentage change with visual indicators (📈 📉)
+- **Market Statistics**:
+  - Market Cap
+  - 24h Trading Volume
+  - Total Token Holders
 
-        h1 {
-            font-size: 32px;
-        }
+### Referral System 🏆
+- **Referral Codes** - Generate unique referral codes for each user
+- **Commission Tracking** - 5% commission on referral transactions
+- **Referral Count** - Track number of successful referrals
 
-        h1 span {
-            color: #ffd700;
-        }
+### User Experience
+- **Toast Notifications** - Feedback messages for all actions
+- **Haptic Feedback** - Vibration feedback on Telegram (light impact)
+- **Responsive Design** - Mobile-optimized interface
+- **Glassmorphism UI** - Modern design with blur effects
 
-        .user-info {
-            background: rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            backdrop-filter: blur(10px);
-        }
+## 🛠️ Technology Stack
 
-        .user-avatar {
-            width: 50px;
-            height: 50px;
-            background: #ffd700;
-            border-radius: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: #1a1a2e;
-        }
+- **HTML5** - Structure and semantic markup
+- **CSS3** - Modern styling with gradients and backdrop filters
+- **JavaScript (Vanilla)** - No dependencies, pure JS
+- **Telegram Web App API** - Integration with Telegram Mini Apps
 
-        .user-balance {
-            flex: 1;
-        }
+## 📱 Telegram Integration
 
-        .balance-amount {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ffd700;
-        }
+This app uses the official Telegram Web App API:
+- `telegram-web-app.js` - Provides WebApp context
+- `tg.initDataUnsafe.user` - Access user information
+- `tg.HapticFeedback` - Trigger haptic feedback
+- `tg.MainButton` - Control main action button
 
-        .price-card {
-            background: rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 15px;
-            text-align: center;
-            margin-bottom: 20px;
-            backdrop-filter: blur(10px);
-        }
+## 🚀 Getting Started
 
-        .price {
-            font-size: 42px;
-            font-weight: bold;
-            color: #ffd700;
-        }
+### Prerequisites
+- Telegram Bot with Mini App enabled
+- Web server to host the HTML file (HTTPS required)
 
-        .change {
-            font-size: 14px;
-            margin-top: 5px;
-        }
+### Installation
 
-        .stats {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+1. Clone the repository:
+```bash
+git clone https://github.com/zait-noori/zusdd-mini-app.git
+cd zusdd-mini-app
+```
 
-        .stat-card {
-            background: rgba(255,255,255,0.1);
-            border-radius: 15px;
-            padding: 12px;
-            text-align: center;
-            flex: 1;
-            backdrop-filter: blur(10px);
-        }
+2. Host the `index.html` file on a web server
 
-        .stat-value {
-            font-size: 18px;
-            font-weight: bold;
-            color: #ffd700;
-        }
+3. Configure your Telegram Bot's Mini App URL to point to your hosted file
 
-        .stat-label {
-            font-size: 10px;
-            opacity: 0.7;
-            margin-top: 5px;
-        }
+4. Open the Mini App from your Telegram bot
 
-        .button-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+### Quick Deploy
 
-        .btn {
-            background: linear-gradient(135deg, #ffd700, #ffb347);
-            border: none;
-            padding: 12px;
-            border-radius: 12px;
-            font-weight: bold;
-            color: #1a1a2e;
-            cursor: pointer;
-            flex: 1;
-            min-width: 100px;
-            transition: transform 0.2s;
-        }
+For quick testing, you can use any web hosting service:
+- Netlify
+- Vercel
+- GitHub Pages
+- Firebase Hosting
 
-        .btn-secondary {
-            background: rgba(255,255,255,0.2);
-            color: white;
-        }
+## 📊 Features Breakdown
 
-        .btn:hover {
-            transform: scale(0.98);
-        }
+### Price Updates
+- Automatic price updates every 10 seconds
+- Random price fluctuation (±0.1%) to simulate real market
+- Price history tracking (last 7 prices)
 
-        .referral-section {
-            background: rgba(255,255,255,0.1);
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 20px;
-            backdrop-filter: blur(10px);
-        }
+### Balance Management
+- Client-side balance tracking (can be extended to backend)
+- Transaction validation before sell/transfer
+- Insufficient balance error handling
 
-        .referral-link {
-            background: rgba(0,0,0,0.3);
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 12px;
-            word-break: break-all;
-            margin: 10px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+### Referral System
+- Unique code: `ZUSDD` + User ID
+- Copy-to-clipboard functionality
+- Commission rate: 5% per referral
 
-        .copy-btn {
-            background: #ffd700;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+## 🎨 Design Features
 
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #00ff88;
-            color: #1a1a2e;
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-weight: bold;
-            display: none;
-            z-index: 100;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <div class="token-icon">💎</div>
-            <h1>ZUSDD <span>$</span></h1>
-        </div>
+- **Color Scheme**:
+  - Primary Gold: #ffd700
+  - Dark Background: Gradient (#0f0c29, #302b63, #24243e)
+  - Success Green: #00ff88
+  - Error Red: #ff4444
 
-        <div class="user-info">
-            <div class="user-avatar" id="userAvatar">👤</div>
-            <div class="user-balance">
-                <div>ستاسو توازن</div>
-                <div class="balance-amount" id="userBalance">0 ZUSDD</div>
-            </div>
-        </div>
+- **Typography**: 
+  - Supports Pashto language (افغانی)
+  - Responsive font sizes
+  - Clear visual hierarchy
 
-        <div class="price-card">
-            <div class="price" id="currentPrice">$0.024</div>
-            <div class="change" id="priceChange">📈 +2.4% (24h)</div>
-        </div>
+- **UI Elements**:
+  - Glassmorphism cards with backdrop blur
+  - Smooth transitions and hover effects
+  - Mobile-first responsive design
 
-        <div class="stats">
-            <div class="stat-card">
-                <div class="stat-value" id="marketCap">$2.4M</div>
-                <div class="stat-label">مارکیټ کیپ</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="volume">$156K</div>
-                <div class="stat-label">حجم (24h)</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="holders">12.5K</div>
-                <div class="stat-label">هلډرز</div>
-            </div>
-        </div>
+## ⚙️ Configuration
 
-        <div class="button-grid">
-            <button class="btn" onclick="buyToken()">🛒 اخیستل</button>
-            <button class="btn" onclick="sellToken()">💰 پلورل</button>
-            <button class="btn btn-secondary" onclick="transferToken()">📤 لیږدول</button>
-        </div>
+You can customize the following in the JavaScript section:
 
-        <div class="referral-section">
-            <div>🏆 د حوالې سیستم</div>
-            <div class="referral-link">
-                <span id="refCode">د حوالې کوډ...</span>
-                <button class="copy-btn" onclick="copyReferral()">کاپي</button>
-            </div>
-            <div>د حوالې کمیسیون: <strong>5%</strong></div>
-            <div>ستاسو حوالې: <strong id="refCount">0</strong></div>
-        </div>
+```javascript
+// User defaults
+let user = { first_name: "کارن", id: Math.floor(Math.random() * 1000000) };
 
-        <div class="stats">
-            <div class="stat-card">
-                <div class="stat-value">🌐</div>
-                <div class="stat-label">بلاکچین</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">⚡</div>
-                <div class="stat-label">چټک لیږد</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">🔒</div>
-                <div class="stat-label">خوندي</div>
-            </div>
-        </div>
-    </div>
+// Initial price
+let price = 0.024;
 
-    <div class="toast" id="toast">پیغام</div>
+// Price history
+let priceHistory = [0.0235, 0.024, 0.0245, 0.0238, 0.0242, 0.024];
 
-    <script>
-        let tg = window.Telegram.WebApp;
-        tg.ready();
-        tg.expand();
-        tg.MainButton.setText("ZUSDD ټوکن");
-        tg.MainButton.show();
+// Referral commission
+const REFERRAL_COMMISSION = 5; // 5%
 
-        let user = tg.initDataUnsafe?.user || { first_name: "کارن", id: Math.floor(Math.random() * 1000000) };
-        document.getElementById("userAvatar").innerText = user.first_name?.charAt(0) || "👤";
-        
-        let balance = 0;
-        let referralCount = 0;
-        let referralCode = "ZUSDD" + user.id;
-        let price = 0.024;
-        let priceHistory = [0.0235, 0.024, 0.0245, 0.0238, 0.0242, 0.024];
+// Price update interval
+const UPDATE_INTERVAL = 10000; // 10 seconds
+```
 
-        function updatePrice() {
-            let change = ((price - priceHistory[priceHistory.length-2]) / priceHistory[priceHistory.length-2] * 100).toFixed(1);
-            document.getElementById("currentPrice").innerHTML = `$${price.toFixed(4)}`;
-            let changeElement = document.getElementById("priceChange");
-            if (change > 0) {
-                changeElement.innerHTML = `📈 +${change}% (24h)`;
-                changeElement.style.color = "#00ff88";
-            } else {
-                changeElement.innerHTML = `📉 ${change}% (24h)`;
-                changeElement.style.color = "#ff4444";
-            }
-        }
+## 📈 Future Enhancements
 
-        function updateBalance() {
-            document.getElementById("userBalance").innerHTML = balance + " ZUSDD";
-        }
+- [ ] Backend integration for persistent data
+- [ ] Real API integration for live market data
+- [ ] Transaction history and analytics
+- [ ] Wallet analytics dashboard
+- [ ] Multi-language support
+- [ ] Dark/Light theme toggle
+- [ ] Push notifications
+- [ ] KYC/AML verification
+- [ ] Payment gateway integration
+- [ ] Advanced charting
+- [ ] Mobile app versions
 
-        function buyToken() {
-            let amount = prompt("څومره ZUSDD اخیستل غواړئ؟", "100");
-            if (amount && !isNaN(amount) && amount > 0) {
-                balance += parseFloat(amount);
-                updateBalance();
-                showToast(`✅ ${amount} ZUSDD واخلئ شو!`);
-                tg.HapticFeedback.impactOccurred("light");
-            }
-        }
+## 🔒 Security Considerations
 
-        function sellToken() {
-            let amount = prompt("څومره ZUSDD پلورل غواړئ؟", "10");
-            if (amount && !isNaN(amount) && amount > 0) {
-                if (amount <= balance) {
-                    balance -= parseFloat(amount);
-                    updateBalance();
-                    showToast(`💰 ${amount} ZUSDD وپلورل شو!`);
-                    tg.HapticFeedback.impactOccurred("light");
-                } else {
-                    showToast("❌ کافي توازن نشته!");
-                }
-            }
-        }
+This is a client-side demo. For production deployment:
+- ✅ Implement server-side validation
+- ✅ Use secure API endpoints (HTTPS)
+- ✅ Add authentication & authorization
+- ✅ Implement rate limiting
+- ✅ Store sensitive data securely
+- ✅ Add CSRF protection
+- ✅ Sanitize user inputs
+- ✅ Never hardcode secrets
+- ✅ Use environment variables for config
+- ✅ Regular security audits
 
-        function transferToken() {
-            let address = prompt("د ترلاسه کونکي آدرس ولیکئ:");
-            let amount = prompt("څومره لیږدول غواړئ؟");
-            if (address && amount && !isNaN(amount) && amount > 0) {
-                if (amount <= balance) {
-                    balance -= parseFloat(amount);
-                    updateBalance();
-                    showToast(`📤 ${amount} ZUSDD لیږل شو!`);
-                    tg.HapticFeedback.impactOccurred("light");
-                } else {
-                    showToast("❌ کافي توازن نشته!");
-                }
-            }
-        }
+## 📱 Browser Support
 
-        document.getElementById("refCode").innerText = referralCode;
-        
-        function copyReferral() {
-            navigator.clipboard.writeText(referralCode);
-            showToast("📋 د حوالې کوډ کاپي شو!");
-            referralCount++;
-            document.getElementById("refCount").innerHTML = referralCount;
-        }
+- Chrome (Latest)
+- Firefox (Latest)
+- Safari (Latest)
+- Telegram In-App Browser (Recommended)
 
-        function showToast(message) {
-            let toast = document.getElementById("toast");
-            toast.innerText = message;
-            toast.style.display = "block";
-            setTimeout(() => {
-                toast.style.display = "none";
-            }, 2000);
-        }
+## 🤝 Contributing
 
-        setInterval(() => {
-            let change = (Math.random() - 0.5) * 0.002;
-            price = Math.max(0.01, price + change);
-            priceHistory.push(price);
-            if (priceHistory.length > 7) priceHistory.shift();
-            updatePrice();
-        }, 10000);
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-        updatePrice();
-        updateBalance();
-    </script>
-</body>
-</html>
+## 📞 Support
+
+For issues or questions, please open an issue on GitHub.
+
+## 📄 License
+
+MIT License - feel free to use this project for your own purposes.
+
+## 👨‍💻 Author
+
+Created for the Afghan cryptocurrency community.
+
+---
+
+**Made with ❤️ for Telegram Mini Apps**
+
+> 💡 **Tip**: This is a demo/template. For production use, connect to real blockchain APIs and implement proper backend infrastructure.
